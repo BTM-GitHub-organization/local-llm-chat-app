@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  flask-backend:
+    build: ./app
+    ports:
+      - "5050:5000"
+    volumes:
+      - ./app/templates:/app/templates
+      - ./app/server.py:/app/server.py
+    environment:
+      - LM_API=http://host.docker.internal:1234/v1/chat/completions
+    networks:
+      - lm-net
+
+networks:
+  lm-net:
+    driver: bridge
